@@ -1,0 +1,21 @@
+<launch>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">d
+        <arg name="debug" default="false"/>
+        <arg name="gui" default="true"/>
+        <arg name="paused" default="false"/>
+        <arg name="use_sim_time" default="true"/>
+        <arg name="headless" default="false"/>
+    </include>
+
+    <arg name="gui" default="false"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder
+        $(find mobile_robot_description)/urdf/mobile_robot.urdf.xacro"/>
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false"
+        output="screen" args="-urdf -model MobileRobot -param robot_description -z 0.05" />
+    <param name="use_gui" value="$(arg gui)"/>
+
+    <rosparam command="load" file="$(find odom_practice)/cfg/robot_odom.yaml"/>
+    <node pkg="tf" type="static_transform_publisher" name="set_custom_odom" args="0.1 0 0 0 0 0 base_link custom_base 100" />
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    <node name="robot_odom" pkg="odom_practice" type="robot_odom"/>
+</launch>
