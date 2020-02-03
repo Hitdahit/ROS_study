@@ -4,7 +4,9 @@
 ## This repository has tutorial codes for ros programming and my project codes.
 
 
-### odom_practice
+### 1. odom_practice
+this package is practice that how to calculate odometry.
+calculate velocities of wheels and yaw. and visualize with rviz.
  1. run launch file.
  2. run rviz
  3. run teleop prog.
